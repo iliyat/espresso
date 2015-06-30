@@ -1,11 +1,11 @@
 {
-  "name": "diveinto",
-  "version": "2.0.1",
-  "description": "Dive into images generator",
+  "name": "express-boilerplate",
+  "version": "0.0.2",
+  "description": "Boilerplate with express & twitter bootstrap",
   "main": "server.coffee",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "cake server"
+    "start": "cake dev"
   },
   "author": "Iliya Tovstyonok",
   "license": "MIT",
@@ -29,8 +29,5 @@
     "underscore": "~1.8.3",
     "vinyl-source-stream": "^1.1.0",
     "watch": "~0.16.0"
-  },
-  "devDependencies": {
-    "node-gyp": "~2.0.1"
   }
 }
