@@ -9,6 +9,11 @@
   },
   "author": "Iliya Tovstyonok",
   "license": "MIT",
+  "repository":
+  {
+    "type": "git",
+    "url": "https://github.com/iliyat/express-boilerplate.git"
+  },
   "dependencies": {
     "app-module-path": "^1.0.2",
     "bootswatch": "~3.3.4",
