@@ -1,7 +1,7 @@
 require('app-module-path').addPath(__dirname)
 
 {exec, spawn} = require('child_process')
-{print} = require('sys')
+{print} = require('util')
 log = require('app/mixins/utils').log
 watch = require('watch')
 
@@ -10,12 +10,23 @@ respawn = false
 serverRunner = null
 gulpRunner = null
 
+
+processCleanup = ->
+  if process.platform == 'win32'
+    exec('taskkill /pid ' + serverRunner.pid + ' /T /F');
+    exec('taskkill /pid ' + gulpRunner.pid + ' /T /F');
+  else
+    serverRunner.kill('SIGKILL')
+    gulpRunner.kill('SIGKILL')
+  log "Server process stopped with pid #{serverRunner.pid}"
+  log "Gulp process stopped with pid #{gulpRunner.pid}"
+
 runnerLog = (runner) ->
   runner.stdout.on('data', (data)-> process.stdout.write(data.toString()))
   runner.stderr.on('data', (data)-> process.stderr.write(data.toString()))
 
 startServer = ->
-  command = "coffee"
+  command = if process.platform == 'win32' then "coffee.cmd" else "coffee"
   log "[Cake]: Starting node with \"#{command}\""
   serverRunner = spawn(command, ["server.coffee"])
   serverRunner.on 'error', (err) -> log err
@@ -27,14 +38,14 @@ startServer = ->
   respawn = false
 
 startGulpWatch = ->
-  command = "gulp"
+  command = if process.platform == 'win32' then "gulp.cmd" else "gulp"
   log "[Cake]: Starting Gulp watching"
   gulpRunner = spawn(command, ["watch", "--silent"])
   gulpRunner.on 'error', (err) -> log err
   runnerLog(gulpRunner)
 
 gulpCompile = ->
-  command = "gulp"
+  command = if process.platform == 'win32' then "gulp.cmd" else "gulp"
   gulpRunner = spawn(command, ["build", "--silent"])
   gulpRunner.on 'error', (err) -> log err
   runnerLog(gulpRunner)
@@ -56,5 +67,11 @@ task 'watch', 'Watch server files', (options) ->
     watch.createMonitor './app/server', (monitor) ->
       monitor.on 'changed', (f)->
         log "[Watch]: file #{f} was changed"
-        serverRunner.kill('SIGKILL') if serverRunner
+        if process.platform == 'win32'
+          exec('taskkill /pid ' + serverRunner.pid + ' /T /F');
+        else
+          serverRunner.kill('SIGKILL')
         respawn = true
+
+
+process.on('beforeExit', processCleanup)
