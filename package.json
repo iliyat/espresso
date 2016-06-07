@@ -9,8 +9,7 @@
   },
   "author": "Iliya Tovstyonok",
   "license": "MIT",
-  "repository":
-  {
+  "repository": {
     "type": "git",
     "url": "https://github.com/iliyat/express-boilerplate.git"
   },
@@ -33,5 +32,8 @@
     "underscore": "~1.8.3",
     "vinyl-source-stream": "^1.1.0",
     "watch": "~0.16.0"
+  },
+  "devDependencies": {
+    "gulp-cli": "^1.2.1"
   }
 }
