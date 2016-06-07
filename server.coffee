@@ -25,5 +25,10 @@ app.set('view engine', '.hbs')
 controller.use(app) for key, controller of require('app/server/controllers')
 
 #Start listen
-app.listen config.server.port, ->
-  log "[App]: Server starts on port #{config.server.port}"
+log config.server.ip
+if config.server.ip
+  app.listen config.server.port, config.server.ip, ->
+    log "[App]: Server starts on address #{config.server.ip} and port #{config.server.port}"
+else
+  app.listen config.server.port, ->
+    log "[App]: Server starts on port #{config.server.port}"
