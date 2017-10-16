@@ -1,7 +1,7 @@
 {
-  "name": "express-boilerplate",
+  "name": "espresso",
   "version": "0.0.2",
-  "description": "Boilerplate with express & twitter bootstrap",
+  "description": "Boilerplate with express on CoffeScript",
   "main": "server.coffee",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -11,7 +11,7 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/iliyat/express-boilerplate.git"
+    "url": "https://github.com/iliyat/espresso.git"
   },
   "dependencies": {
     "app-module-path": "^1.0.2",
